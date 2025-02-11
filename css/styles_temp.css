@@ -1,0 +1,99 @@
+/* Existing styles remain the same */
+:root {
+    --primary-color: #0d6efd;
+    --success-color: #198754;
+    --warning-color: #ffc107;
+    --danger-color: #dc3545;
+}
+
+/* Previous styles remain unchanged */
+
+/* New styles for enhanced features */
+.category-selector {
+    margin: 20px 0;
+}
+
+.category-item {
+    padding: 8px 16px;
+    border-radius: 20px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.category-item.selected {
+    background-color: var(--primary-color);
+    color: white;
+}
+
+.charts-container {
+    padding: 20px;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 10px;
+    margin: 20px 0;
+}
+
+.charts-container canvas {
+    max-width: 100%;
+    height: auto;
+}
+
+#qr-code {
+    background: white;
+    padding: 10px;
+    border-radius: 8px;
+    display: inline-block;
+    margin: 0 auto;
+}
+
+.stats-details {
+    background: rgba(255, 255, 255, 0.05);
+    padding: 20px;
+    border-radius: 10px;
+}
+
+.stats-item {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.stats-item:last-child {
+    border-bottom: none;
+}
+
+.difficulty-selector {
+    margin: 20px 0;
+}
+
+.difficulty-selector .btn-group {
+    gap: 10px;
+}
+
+/* Animation for charts */
+@keyframes chartFadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.charts-container canvas {
+    animation: chartFadeIn 0.5s ease-out;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .charts-container .row {
+        flex-direction: column;
+    }
+    
+    .charts-container .col-md-6 {
+        width: 100%;
+        margin-bottom: 20px;
+    }
+}

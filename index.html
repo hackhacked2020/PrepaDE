@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="fr" data-bs-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz Interactif</title>
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/bootstrap-icons.css" rel="stylesheet">
+    <link href="css/styles.css" rel="stylesheet">
+</head>
+<body>
+    <!-- Points Display -->
+    <div id="points-display" class="points-container">
+        <span class="points-value">0</span>
+        <div id="points-particles"></div>
+    </div>
+    
+    <div class="container py-4">
+        <!-- Welcome Screen -->
+        <div id="welcome-screen" class="text-center screen-transition">
+            <h1 class="display-4 mb-4">Quiz Interactif</h1>
+            <div id="categories-container" class="row g-4 mb-4">
+                <!-- Categories will be inserted here -->
+            </div>
+            <div class="d-flex justify-content-center gap-3">
+                <button class="btn btn-secondary btn-lg" data-bs-toggle="modal" data-bs-target="#settingsModal">
+                    <i class="bi bi-gear"></i> Paramètres
+                </button>
+            </div>
+        </div>
+
+        <!-- Instructions Screen -->
+        <div id="instructions-screen" class="d-none screen-transition">
+            <h2 class="mb-4">Instructions</h2>
+            <div class="card">
+                <div class="card-body">
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item">Vous avez 120 secondes par question</li>
+                        <li class="list-group-item">Sélectionnez une ou plusieurs réponses selon la question</li>
+                        <li class="list-group-item">Cliquez sur "Valider" pour confirmer votre réponse</li>
+                        <li class="list-group-item">Gagnez des points bonus en répondant rapidement !</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="mt-4">
+                <button class="btn btn-secondary" id="return-button">Retour</button>
+                <button class="btn btn-primary" id="continue-button">Continuer</button>
+            </div>
+        </div>
+
+        <!-- Quiz Screen -->
+        <div id="quiz-screen" class="d-none screen-transition">
+            <div class="d-flex justify-content-between align-items-center mb-3">
+                <h3 class="category-title mb-0"></h3>
+                <span class="badge bg-primary">Question <span id="current-question">1</span>/<span id="total-questions">0</span></span>
+            </div>
+
+            <div class="progress mb-3">
+                <div class="progress-bar" role="progressbar" style="width: 0%"></div>
+            </div>
+
+            <div class="d-flex justify-content-between mb-3">
+                <span class="badge bg-success points-badge">Points: <span id="current-points">0</span></span>
+                <span class="badge bg-warning" id="timer">120s</span>
+            </div>
+
+            <div class="card mb-4">
+                <div class="card-body">
+                    <div id="question-container">
+                        <h3 id="question-text" class="card-title mb-4"></h3>
+                    </div>
+                    <div id="options-container" class="d-grid gap-2">
+                        <!-- Options will be inserted here -->
+                    </div>
+                </div>
+            </div>
+
+            <div class="d-flex justify-content-between">
+                <button id="validate-btn" class="btn btn-success" disabled>Valider</button>
+                <button id="next-btn" class="btn btn-primary d-none">Suivant</button>
+            </div>
+        </div>
+
+        <!-- Results Screen -->
+        <div id="results-screen" class="d-none screen-transition">
+            <h2 class="mb-4">Résultats</h2>
+            <div class="card mb-4">
+                <div class="card-body">
+                    <div class="score-animation-container">
+                        <h3 class="text-center mb-4">Score Final: <span id="final-score">0</span>/<span id="max-score">0</span></h3>
+                        <div class="points-display">
+                            <span class="total-points">Points totaux: <span id="total-points">0</span></span>
+                        </div>
+                    </div>
+                    <div class="progress mb-4">
+                        <div id="score-progress" class="progress-bar" role="progressbar"></div>
+                    </div>
+                    <div id="detailed-results">
+                        <!-- Detailed results will be inserted here -->
+                    </div>
+                </div>
+            </div>
+            <div class="d-flex gap-2 flex-wrap">
+                <button class="btn btn-primary" id="restart-button">Recommencer</button>
+                <button class="btn btn-success" id="export-pdf-button">Exporter en PDF</button>
+                <button class="btn btn-danger" id="reset-progress-button">Réinitialiser la progression</button>
+            </div>
+        </div>
+
+        <!-- Settings Modal -->
+        <div class="modal fade" id="settingsModal" tabindex="-1">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Paramètres du Quiz</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="form-check form-switch mb-3">
+                            <input class="form-check-input" type="checkbox" id="shuffleQuestions" checked>
+                            <label class="form-check-label" for="shuffleQuestions">
+                                Mélanger les questions
+                            </label>
+                        </div>
+                        <div class="form-check form-switch mb-3">
+                            <input class="form-check-input" type="checkbox" id="shuffleOptions" checked>
+                            <label class="form-check-label" for="shuffleOptions">
+                                Mélanger les options de réponse
+                            </label>
+                        </div>
+                        <div class="form-check form-switch mb-3">
+                            <input class="form-check-input" type="checkbox" id="enableSound" checked>
+                            <label class="form-check-label" for="enableSound">
+                                Activer le son
+                            </label>
+                        </div>
+                        <div class="form-check form-switch mb-3">
+                            <input class="form-check-input" type="checkbox" id="enableParticles" checked>
+                            <label class="form-check-label" for="enableParticles">
+                                Activer les effets visuels
+                            </label>
+                        </div>
+                        <div class="form-check form-switch mb-3">
+                            <input class="form-check-input" type="checkbox" id="autoNext">
+                            <label class="form-check-label" for="autoNext">
+                                Passer automatiquement à la question suivante
+                            </label>
+                        </div>
+                        <div class="mb-3">
+                            <label for="autoNextDelay" class="form-label">Délai avant passage automatique (secondes)</label>
+                            <input type="number" class="form-control" id="autoNextDelay" min="1" max="10" value="3">
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
+                        <button type="button" class="btn btn-primary" id="save-settings-button">Enregistrer</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Audio Elements -->
+    <audio id="correct-sound" src="assets/correct.wav" preload="auto"></audio>
+    <audio id="wrong-sound" src="assets/wrong.mp3" preload="auto"></audio>
+    <audio id="tick-sound" src="assets/tick.wav" preload="auto"></audio>
+    <audio id="points-sound" src="https://assets.mixkit.co/active_storage/sfx/2021/points-earned-success.wav" preload="auto"></audio>
+
+    <!-- Load scripts in correct order -->
+    <script src="js/bootstrap.bundle.min.js"></script>
+<script src="js/tsparticles.slim.bundle.min.js"></script>
+<script src="js/jspdf.umd.min.js"></script>
+<script src="js/html2canvas.min.js"></script>
+<script src="js/jspdf.plugin.autotable.min.js"></script>
+<script src="js/quiz.js"></script>
+</body>
+</html>

@@ -1,0 +1,91 @@
+{
+    "categories": [
+        {
+            "id": "geography",
+            "name": "TEST 2025",
+            "icon": "globe",
+            "questions": [
+                    {
+        "question": "Vous consultez l’enfant JP âgé de 36 mois. Son Z-score poids pour l’âge est en dessous de moins 1. Cela signifie que JP :",
+        "option_a": "A un poids normal pour son âge",
+        "option_b": "Est en surpoids pour son âge",
+        "option_c": "Est obèse pour son âge",
+        "option_d": "A un poids insuffisant pour son âge",
+        "option_e": "",
+        "option_f": "",
+        "correct": [
+            "d"
+        ]
+    },
+    {
+        "question": "<img src='infas.png' class='img-fluid mb-3'>de quoi parle ce texte ?",
+        "option_a": "450 ml de SRO",
+        "option_b": "350 ml de SRO",
+        "option_c": "550 ml de SRO",
+        "option_d": "650 ml de SRO",
+        "option_e": "",
+        "option_f": "",
+        "correct": [
+            "a"
+        ]
+    },
+    {
+        "question": "Nourrisson Jk est âgé de 10 mois et pèse 10 kg. Il présente des signes sévères de déshydratation. J’administre durant les 5 heures suivant la première heure de traitement",
+        "option_a": "500 ml de soluté",
+        "option_b": "750 ml de soluté",
+        "option_c": "700 ml de soluté",
+        "option_d": "650 ml de soluté",
+        "option_e": "",
+        "option_f": "",
+        "correct": [
+            "c"
+        ]
+    },
+    {
+        "question": "DF, garçon est né à terme eutrophique. La sage-femme vous informe que DF pèse 3420g aux 3 jours de vie et qu’il a perdu 10% de son poids de naissance. Je déduis que le poids de naissance de DF était de",
+        "option_a": "3762 g",
+        "option_b": "3580 g",
+        "option_c": "3800 g",
+        "option_d": "3250 g",
+        "option_e": "",
+        "option_f": "",
+        "correct": [
+            "c"
+        ]
+    }
+            ]
+        },
+        {
+            "id": "history",
+            "name": "Histoire",
+            "icon": "book",
+            "questions": [
+                {
+                    "question": "Quels sont les pays membres permanents du Conseil de sécurité de l'ONU?",
+                    "option_a": "États-Unis",
+                    "option_b": "Royaume-Uni",
+                    "option_c": "France",
+                    "option_d": "Chine",
+                    "option_e": "Russie",
+                    "option_f": "Japon",
+                    "correct": ["a", "b", "c", "d", "e"]
+                }
+            ]
+        },
+        {
+            "id": "culture",
+            "name": "Culture",
+            "icon": "palette",
+            "questions": [
+                {
+                    "question": "Identifiez ce monument: <img src='https://upload.wikimedia.org/wikipedia/commons/8/85/Tour_Eiffel_Wikimedia_Commons_%28cropped%29.jpg' class='img-fluid mb-3'>",
+                    "option_a": "Big Ben",
+                    "option_b": "Tour Eiffel",
+                    "option_c": "Statue de la Liberté",
+                    "option_d": "Tour de Pise",
+                    "correct": ["b"]
+                }
+            ]
+        }
+    ]
+}
