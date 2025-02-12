@@ -6,6 +6,7 @@
 }
 
 body {
+    /*background-image: url('img.jpg');*/
     background-color: var(--bs-dark);
     color: var(--bs-light);
     font-size: 16px;

@@ -3,9 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Quiz Interactif</title>
+    <title>IDE : INFIRMIER DIPLÔMÉ D'ÉTAT</title>
     <link href="css/bootstrap.min.css" rel="stylesheet">
-    <link href="css/bootstrap-icons.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
     <link href="css/styles.css" rel="stylesheet">
 </head>
 <body>
@@ -18,13 +18,13 @@
     <div class="container py-4">
         <!-- Welcome Screen -->
         <div id="welcome-screen" class="text-center screen-transition">
-            <h1 class="display-4 mb-4">Quiz Interactif</h1>
+            <h1 class="display-4 mb-4">IDE : INFIRMIER DIPLÔMÉ D'ÉTAT</h1>
             <div id="categories-container" class="row g-4 mb-4">
                 <!-- Categories will be inserted here -->
             </div>
             <div class="d-flex justify-content-center gap-3">
                 <button class="btn btn-secondary btn-lg" data-bs-toggle="modal" data-bs-target="#settingsModal">
-                    <i class="bi bi-gear"></i> Paramètres
+                    <i class="fa-solid fa-gear"></i> Paramètres
                 </button>
             </div>
         </div>
@@ -116,12 +116,6 @@
                         <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                     </div>
                     <div class="modal-body">
-                        <div class="form-check form-switch mb-3">
-                            <input class="form-check-input" type="checkbox" id="shuffleQuestions" checked>
-                            <label class="form-check-label" for="shuffleQuestions">
-                                Mélanger les questions
-                            </label>
-                        </div>
                         <div class="form-check form-switch mb-3">
                             <input class="form-check-input" type="checkbox" id="shuffleOptions" checked>
                             <label class="form-check-label" for="shuffleOptions">

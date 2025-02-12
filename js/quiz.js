@@ -20,7 +20,6 @@ let quizProgress = {
 
 // Settings
 let quizSettings = {
-    shuffleQuestions: true,
     shuffleOptions: true,
     enableSound: true,
     enableParticles: true,
@@ -35,7 +34,6 @@ function loadSettings() {
 
     if (savedSettings) {
         quizSettings = { ...quizSettings, ...JSON.parse(savedSettings) };
-        document.getElementById('shuffleQuestions').checked = quizSettings.shuffleQuestions;
         document.getElementById('shuffleOptions').checked = quizSettings.shuffleOptions;
         document.getElementById('enableSound').checked = quizSettings.enableSound;
         document.getElementById('enableParticles').checked = quizSettings.enableParticles;
@@ -66,7 +64,7 @@ function displayCategories() {
         <div class="col-md-4">
             <div class="card category-card h-100" onclick="selectCategory('${category.id}')">
                 <div class="card-body text-center">
-                    <i class="bi bi-${category.icon}"></i>
+                    <i class="fa-solid fa-${category.icon}"></i>
                     <h5 class="card-title">${category.name}</h5>
                     <div class="category-stats">
                         <small>Meilleur score: ${getHighScoreForCategory(category.id)}</small>
@@ -84,9 +82,6 @@ function getHighScoreForCategory(categoryId) {
 function selectCategory(categoryId) {
     currentCategory = categories.find(c => c.id === categoryId);
     questions = currentCategory.questions;
-    if (quizSettings.shuffleQuestions) {
-        questions = shuffleArray([...questions]);
-    }
     document.querySelector('.category-title').textContent = currentCategory.name;
     document.getElementById('total-questions').textContent = questions.length;
     startQuiz();
@@ -96,7 +91,7 @@ function selectCategory(categoryId) {
 function startQuiz() {
     currentQuestionIndex = 0;
     score = 0;
-    totalPoints = 0;
+    //totalPoints = 0;
     currentPoints = 0;
     userAnswers = [];
     transitionScreens('welcome-screen', 'instructions-screen');
@@ -131,6 +126,7 @@ function returnToHome() {
 }
 
 function startQuestions() {
+    document.getElementById('points-display').style.display = 'block'; // Ou 'inline', 'inline-block' en fonction du contexte
     transitionScreens('instructions-screen', 'quiz-screen');
     loadQuestion();
 }
@@ -165,8 +161,8 @@ document.getElementById('next-btn').classList.add('d-none'); // Cacher le bouton
 function getShuffledOptions(question) {
     const options = [];
     ['a', 'b', 'c', 'd', 'e', 'f'].forEach(letter => {
-        if (question[`option_${letter}`]) {
-            options.push({ letter, text: question[`option_${letter}`] });
+        if (question[`${letter}`]) {
+            options.push({ letter, text: question[`${letter}`] });
         }
     });
     return quizSettings.shuffleOptions ? shuffleArray(options) : options;
@@ -200,19 +196,26 @@ function validateAnswer() {
     userAnswers[currentQuestionIndex] = selectedOptions;
 
     if (isCorrect) {
-        score++;
-        const timeBonus = calculateTimeBonus();
-        updatePoints(timeBonus);
-        playSound('correct-sound');
-    } else {
-        playSound('wrong-sound');
-    }
+    score++;  // Ajoute un point pour chaque bonne réponse
+    const timeBonus = calculateTimeBonus();  // Calcule un bonus en fonction du temps restant
+    totalPoints += timeBonus;  // Ajoute le bonus de temps au total des points
+    updatePoints(timeBonus);  // Mettez à jour l'affichage des points (si nécessaire)
+    playSound('correct-sound');
+     } else {
+    playSound('wrong-sound');
+     }
 
     showAnswerFeedback();
     updateNavigationButtons();
 
     if (quizSettings.autoNext && currentQuestionIndex < questions.length - 1) {
         setTimeout(nextQuestion, quizSettings.autoNextDelay * 1000);
+        document.getElementById("next-btn").classList.add("d-none");
+    }
+    
+    if (!quizSettings.autoNext) {
+        document.getElementById('points-display').style.display = 'none';
+        document.getElementById("next-btn").classList.remove("d-none");
     }
 }
 
@@ -299,9 +302,9 @@ function updateResultsDisplay() {
                 <h5>Question ${index + 1}</h5>
                 <p>${question.question}</p>
                 <p><strong>Votre réponse:</strong> ${userAnswers[index].map(opt =>
-                    question[`option_${opt}`]).join(', ')}</p>
+                    question[`${opt}`]).join(', ')}</p>
                 <p><strong>Bonne réponse:</strong> ${question.correct.map(opt =>
-                    question[`option_${opt}`]).join(', ')}</p>
+                    question[`${opt}`]).join(', ')}</p>
             </div>
         `;
     }).join('');
@@ -383,8 +386,8 @@ const generatePDF = () => {
     return [
         `Q${index + 1}`, // Numéro de la question
         doc.splitTextToSize(question.question.replace(/<[^>]*>/g, ''), 60),
-        doc.splitTextToSize(userAnswers[index].map(opt => question[`option_${opt}`]).join(', '), 40),
-        doc.splitTextToSize(question.correct.map(opt => question[`option_${opt}`]).join(', '), 40),
+        doc.splitTextToSize(userAnswers[index].map(opt => question[`${opt}`]).join(', '), 40),
+        doc.splitTextToSize(question.correct.map(opt => question[`${opt}`]).join(', '), 40),
         isCorrect ? "CORRECT" : "INCORRECT" // État en majuscules
     ];
 });
@@ -464,14 +467,16 @@ function resetProgress() {
             totalCorrectAnswers: 0,
             categoryScores: {}
         };
+        //document.getElementById('total-points').textContent = 0;
         localStorage.removeItem('quizProgress');
         alert('Progression réinitialisée avec succès !');
-        restartQuiz();
+        document.getElementById('points-display').style.display = 'none';
+        location.reload();
+        //restartQuiz();
     }
 }
 
 function saveSettings() {
-    quizSettings.shuffleQuestions = document.getElementById('shuffleQuestions').checked;
     quizSettings.shuffleOptions = document.getElementById('shuffleOptions').checked;
     quizSettings.enableSound = document.getElementById('enableSound').checked;
     quizSettings.enableParticles = document.getElementById('enableParticles').checked;
@@ -486,20 +491,21 @@ function saveSettings() {
 // Initialize when DOM is loaded
 document.addEventListener('DOMContentLoaded', function() {
     console.log("DOM chargé, démarrage de l'initialisation...");
+    document.getElementById('points-display').style.display = 'none';
     loadSettings();
     loadCategories();
     setupEventListeners();
 });
 
 function restartQuiz() {
-    currentQuestionIndex = 10;
+    currentQuestionIndex = 0;
     score = 0;
     userAnswers = [];
-    totalPoints = 0;
+    //totalPoints = 0;
     currentPoints = 0;
-    if (quizSettings.shuffleQuestions) {
-        questions = shuffleArray([...questions]);
-    }
+    
+    document.getElementById('current-points').textContent = '0';
+    document.getElementById('points-display').style.display = 'none';
     transitionScreens('results-screen', 'welcome-screen');
    updateNavigationButtons();
 }
@@ -575,7 +581,7 @@ function createParticles() {
 // Points and Animation Functions
 function updatePoints(points) {
     currentPoints += points;
-    totalPoints += points;
+    //totalPoints += points;
 
     // Update points display
     const pointsValue = document.querySelector('.points-value');
